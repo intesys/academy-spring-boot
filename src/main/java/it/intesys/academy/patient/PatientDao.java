@@ -1,24 +1,19 @@
 package it.intesys.academy.patient;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import it.intesys.academy.AppConfig;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class PatientDao {
 
     public Patient findById(Long patientId) {
 
-        try (Connection connection = dataSource().getConnection()) {
+        try (Connection connection = AppConfig.dataSource().getConnection()) {
             //execute query
             PreparedStatement selectStatement = connection.prepareStatement("select id, firstName, lastName from patient where id = ?");
             selectStatement.setLong(1, patientId);
@@ -36,7 +31,7 @@ public class PatientDao {
     }
 
     public List<Patient> searchPatient(String searchString) {
-        try (Connection connection = dataSource().getConnection()) {
+        try (Connection connection = AppConfig.dataSource().getConnection()) {
             //execute query
             PreparedStatement selectStatement = connection
                     .prepareStatement("select id, firstName, lastName from patient where lastName like ? or firstName like ?");
@@ -53,28 +48,6 @@ public class PatientDao {
         } catch (Exception e){
             throw new RuntimeException(e);
         }
-    }
-
-    public static DataSource dataSource() {
-        Properties appProperties = appProperties();
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(appProperties.getProperty("db.url"));
-        hikariConfig.setUsername(appProperties.getProperty("db.user"));
-        hikariConfig.setPassword(appProperties.getProperty("db.password"));
-        hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        return new HikariDataSource(hikariConfig);
-    }
-
-
-    private static Properties appProperties() {
-
-        Properties prop = new Properties();
-        try (InputStream input = PatientDao.class.getClassLoader().getResourceAsStream("application.properties")) {
-            prop.load(input);
-        } catch (IOException ex) {
-            throw new IllegalStateException("Property load fail", ex);
-        }
-        return prop;
     }
 
     List<Patient> mapToListOfPatients(ResultSet resultSet) throws SQLException {
