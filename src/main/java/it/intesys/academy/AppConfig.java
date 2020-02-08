@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -22,14 +23,16 @@ import java.util.Properties;
 public class AppConfig {
 
     @Bean
-    public DataSource dataSource(Environment environment) {
+    public JdbcTemplate dataSource(Environment environment) {
 
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(environment.getProperty("db.url"));
         hikariConfig.setUsername(environment.getProperty("db.user"));
         hikariConfig.setPassword(environment.getProperty("db.password"));
         hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        return new HikariDataSource(hikariConfig);
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
+        return new JdbcTemplate(dataSource);
     }
 
 }
