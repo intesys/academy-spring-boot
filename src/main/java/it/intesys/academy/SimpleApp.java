@@ -1,6 +1,7 @@
 package it.intesys.academy;
 
 import it.intesys.academy.patient.Patient;
+import it.intesys.academy.patient.PatientDao;
 import it.intesys.academy.patient.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ public class SimpleApp {
         // app entry point, will become a REST controller
         String searchString = args[0];
         logger.info("Searching for {}", searchString);
-        List<Patient> patients = new PatientService().searchPatient(searchString);
+        List<Patient> patients = new PatientService(new PatientDao()).searchPatient(searchString);
         logger.info("\nFound {} patients!", patients.size());
 
         for (Patient patient : patients) {

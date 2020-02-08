@@ -4,8 +4,14 @@ import java.util.List;
 
 public class PatientService {
 
+    private PatientDao patientDao;
+
+    public PatientService(PatientDao patientDao) {
+        this.patientDao = patientDao;
+    }
+
     public Patient getPatient(Long patientId) {
-        Patient patient = new PatientDao().findById(patientId);
+        Patient patient = patientDao.findById(patientId);
 
         if(patient == null) {
             throw new RuntimeException("Patient not found");
@@ -15,7 +21,7 @@ public class PatientService {
     }
 
     public List<Patient> searchPatient(String patientString) {
-        List<Patient> patients = new PatientDao().searchPatient(patientString);
+        List<Patient> patients = patientDao.searchPatient(patientString);
 
         if(patients == null) {
             throw new RuntimeException("No patients found for search string" + patientString);
