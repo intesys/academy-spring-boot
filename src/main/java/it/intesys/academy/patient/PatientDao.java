@@ -1,7 +1,6 @@
 package it.intesys.academy.patient;
 
-import it.intesys.academy.AppConfig;
-
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,9 +10,15 @@ import java.util.List;
 
 public class PatientDao {
 
+    private DataSource dataSource;
+
+    public PatientDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     public Patient findById(Long patientId) {
 
-        try (Connection connection = AppConfig.dataSource().getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             //execute query
             PreparedStatement selectStatement = connection.prepareStatement("select id, firstName, lastName from patient where id = ?");
             selectStatement.setLong(1, patientId);
@@ -31,7 +36,7 @@ public class PatientDao {
     }
 
     public List<Patient> searchPatient(String searchString) {
-        try (Connection connection = AppConfig.dataSource().getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             //execute query
             PreparedStatement selectStatement = connection
                     .prepareStatement("select id, firstName, lastName from patient where lastName like ? or firstName like ?");
