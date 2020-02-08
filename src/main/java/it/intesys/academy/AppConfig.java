@@ -6,6 +6,7 @@ import it.intesys.academy.patient.Patient;
 import it.intesys.academy.patient.PatientDao;
 import it.intesys.academy.patient.PatientService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -17,6 +18,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:application.properties")
+@ComponentScan
 public class AppConfig {
 
     @Bean
@@ -30,13 +32,4 @@ public class AppConfig {
         return new HikariDataSource(hikariConfig);
     }
 
-    @Bean
-    public PatientService patientService(PatientDao patientDao) {
-        return new PatientService(patientDao);
-    }
-
-    @Bean
-    public PatientDao patientDao(DataSource dataSource) {
-        return new PatientDao(dataSource);
-    }
 }

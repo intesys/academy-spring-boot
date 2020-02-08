@@ -1,5 +1,7 @@
 package it.intesys.academy.patient;
 
+import org.springframework.stereotype.Component;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class PatientDao {
 
     private DataSource dataSource;

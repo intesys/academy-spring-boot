@@ -1,7 +1,10 @@
 package it.intesys.academy.patient;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class PatientService {
 
     private PatientDao patientDao;
