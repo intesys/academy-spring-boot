@@ -3,6 +3,7 @@ package it.intesys.academy;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import it.intesys.academy.patient.PatientDao;
+import it.intesys.academy.patient.PatientService;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -42,5 +43,14 @@ public class AppConfig {
         }
 
         return appProperties;
+    }
+
+    public static PatientService patientService;
+
+    public static PatientService getPatientService() {
+        if(patientService == null) {
+            patientService = new PatientService(new PatientDao());
+        }
+        return patientService;
     }
 }

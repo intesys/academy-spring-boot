@@ -17,7 +17,7 @@ public class SimpleApp {
         // app entry point, will become a REST controller
         String searchString = args[0];
         logger.info("Searching for {}", searchString);
-        List<Patient> patients = new PatientService(new PatientDao()).searchPatient(searchString);
+        List<Patient> patients = AppConfig.getPatientService().searchPatient(searchString);
         logger.info("\nFound {} patients!", patients.size());
 
         for (Patient patient : patients) {
