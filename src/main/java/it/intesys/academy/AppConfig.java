@@ -7,6 +7,8 @@ import it.intesys.academy.patient.PatientDao;
 import it.intesys.academy.patient.PatientService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -14,38 +16,27 @@ import java.io.InputStream;
 import java.util.Properties;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 public class AppConfig {
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource(Environment environment) {
 
-        Properties appProperties = appProperties();
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(appProperties.getProperty("db.url"));
-        hikariConfig.setUsername(appProperties.getProperty("db.user"));
-        hikariConfig.setPassword(appProperties.getProperty("db.password"));
+        hikariConfig.setJdbcUrl(environment.getProperty("db.url"));
+        hikariConfig.setUsername(environment.getProperty("db.user"));
+        hikariConfig.setPassword(environment.getProperty("db.password"));
         hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
         return new HikariDataSource(hikariConfig);
     }
 
     @Bean
-    public Properties appProperties() {
-        Properties prop = new Properties();
-        try (InputStream input = PatientDao.class.getClassLoader().getResourceAsStream("application.properties")) {
-            prop.load(input);
-        } catch (IOException ex) {
-            throw new IllegalStateException("Property load fail", ex);
-        }
-        return prop;
+    public PatientService patientService(PatientDao patientDao) {
+        return new PatientService(patientDao);
     }
 
     @Bean
-    public PatientService patientService() {
-        return new PatientService(patientDao());
-    }
-
-    @Bean
-    public PatientDao patientDao() {
-        return new PatientDao(dataSource());
+    public PatientDao patientDao(DataSource dataSource) {
+        return new PatientDao(dataSource);
     }
 }
