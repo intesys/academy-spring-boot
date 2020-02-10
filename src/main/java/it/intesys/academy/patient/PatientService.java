@@ -32,4 +32,8 @@ public class PatientService {
 
         return patients;
     }
+
+    public int countPatients() {
+        return patientDao.countPatients();
+    }
 }

@@ -26,4 +26,8 @@ public class PatientDao {
                 new Object[]{searchString, search}, new BeanPropertyRowMapper<>(Patient.class));
     }
 
+    public int countPatients() {
+        return jdbcTemplate.queryForObject("select count(*) from patient", Integer.class);
+    }
+
 }
