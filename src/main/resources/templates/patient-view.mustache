@@ -1,0 +1,42 @@
+{{>header}}
+<form name="searchPatient" class="mt-5" action="/patient/search" method="post">
+    <div class="form-group">
+        <h1 class="display-4"><label for="patientSearch">Search Patient</label></h1>
+        <div class="input-group input-group-lg">
+            <input type="search" class="form-control input-lg" id="patientSearch" name="search" value="{{#search}}{{.}}{{/search}}"
+                   placeholder="Patient last name, fiscal code...">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{{#patients.0}}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Birth Date</th>
+        <th scope="col">Fiscal Code</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#patients}}
+    <tr>
+        <th scope="row">{{id}}</th>
+        <td>{{firstName}} {{lastName}}</td>
+        <td>{{birthDate}}</td>
+        <td>{{fiscalCode}}</td>
+        <td>
+            <a class="btn btn-primary" href="/examination/new?patientId={{id}}" role="button">Create Visit <i class="fa fa-medkit"></i></a>
+        </td>
+    </tr>
+    {{/patients}}
+    </tbody>
+</table>
+{{/patients.0}}
+
+{{>footer}}

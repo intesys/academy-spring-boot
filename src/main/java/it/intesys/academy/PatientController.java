@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController("restPatientController")
 public class PatientController {
 
     private Logger logger = LoggerFactory.getLogger(PatientController.class);
