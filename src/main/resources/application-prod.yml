@@ -6,3 +6,5 @@ spring:
     url: jdbc:mysql://test.enricocostanzi.com:3306/academydb
     username: intesys
     password: academy
+application:
+  custom-property: Custom property PROD
