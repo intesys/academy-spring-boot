@@ -4,7 +4,7 @@
 
 #### Aprire il progetto con Intellij
 
-- Da terminale `git clone git clone git@github.com:ecostanzi/intesys-academy-spring-boot.git`
+- Da terminale `git clone git clone git@github.com:intesys/academy-spring-boot.git`
 - Aprire Intellij e andare su `File > New > Project from Existing Sources`
 - Nella finestra che si apre selezionare `Import project from external model` e selezionare Maven.
 - Impostare le il keymap di Eclipse premere SHIFT 2 volte e cercare `keymap`, selezionare `Eclipse`

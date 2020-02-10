@@ -18,5 +18,5 @@ Scaricare e installare:
 
 Clonare questo repository:
 
-`git clone git@github.com:ecostanzi/intesys-academy-spring-boot.git`
+`git clone git@github.com:intesys/academy-spring-boot.git`
 
