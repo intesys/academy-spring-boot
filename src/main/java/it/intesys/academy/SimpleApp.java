@@ -1,6 +1,7 @@
 package it.intesys.academy;
 
 import it.intesys.academy.config.ServerProperties;
+import it.intesys.academy.util.DefaultProfileUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -11,7 +12,9 @@ public class SimpleApp {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(SimpleApp.class, args);
+        SpringApplication app = new SpringApplication(SimpleApp.class);
+        DefaultProfileUtils.addDefaultProfile(app);
+        app.run(args);
     }
 
 }
