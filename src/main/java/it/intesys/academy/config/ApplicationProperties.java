@@ -6,8 +6,10 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotEmpty;
 
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
+@Validated
 public class ApplicationProperties {
 
+    @NotEmpty
     private String customProperty;
 
     public String getCustomProperty() {
