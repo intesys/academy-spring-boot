@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://test.enricocostanzi.com:3306/academydb
+    username: intesys
+    password: academy
