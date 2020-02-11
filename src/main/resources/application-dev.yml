@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: dev
+    include:
+      - fake-data
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:h2:mem:iasb;DB_CLOSE_DELAY=-1;IGNORECASE=true;
