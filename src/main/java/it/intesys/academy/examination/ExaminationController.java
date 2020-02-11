@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,10 +29,19 @@ public class ExaminationController {
         return "new-examination-view";
     }
 
+    @GetMapping("/examinations/{patientId}")
+    public String patientExaminations(@PathVariable long patientId, Model model) {
+
+        model.addAttribute("patient", patientService.getPatient(patientId));
+        model.addAttribute("examinations", examinationService.findByPatientId(patientId));
+
+        return "patient-examinations";
+    }
+
     @PostMapping("/examination/new")
     public String saveExamination(@ModelAttribute Examination examination) {
 
         examinationService.save(examination);
-        return "redirect:/patients";
+        return "redirect:/examinations/" + examination.getPatientId();
     }
 }

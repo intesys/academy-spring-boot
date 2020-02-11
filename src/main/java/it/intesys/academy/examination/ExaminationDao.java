@@ -1,10 +1,12 @@
 package it.intesys.academy.examination;
 
 import it.intesys.academy.examination.model.Examination;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Component
 public class ExaminationDao {
@@ -14,6 +16,12 @@ public class ExaminationDao {
     public ExaminationDao(JdbcTemplate jdbcTemplate) {
 
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public List<Examination> findByPatientId(long patientId) {
+
+        return jdbcTemplate
+            .query("SELECT * FROM examination WHERE patientId = ? ORDER BY examinationDate", new BeanPropertyRowMapper<>(Examination.class), patientId);
     }
 
     public void save(Examination examination) {
