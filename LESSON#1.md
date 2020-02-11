@@ -30,7 +30,7 @@ git checkout tags/IASB#1-START
 ```
 
 Ad ogni task corrisponde un commit che inizia con **IASB#1**. Per vedere la lista dei commit e quindi le modifiche da fare, cliccare qui:
-https://github.com/ecostanzi/intesys-academy-spring-boot/commits/master
+https://github.com/intesys/academy-spring-boot/commits/master
 
 #### Migliorare codice Java
 - Usare un'istanza statica del DataSource
