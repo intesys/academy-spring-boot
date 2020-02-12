@@ -1,4 +1,5 @@
 {{>header}}
+
 <form name="searchPatient" class="mt-5" action="/patient/search" method="post">
     <div class="form-group">
         <h1 class="display-4"><label for="patientSearch">Search Patient</label></h1>
@@ -25,15 +26,15 @@
     </thead>
     <tbody>
     {{#patients}}
-    <tr>
-        <th scope="row">{{id}}</th>
-        <td>{{firstName}} {{lastName}}</td>
-        <td>{{birthDate}}</td>
-        <td>{{fiscalCode}}</td>
-        <td>
-            <a class="btn btn-primary" href="/examination/new?patientId={{id}}" role="button">Create Visit <i class="fa fa-medkit"></i></a>
-        </td>
-    </tr>
+        <tr>
+            <th scope="row">{{id}}</th>
+            <td>{{firstName}} {{lastName}}</td>
+            <td>{{birthDate}}</td>
+            <td>{{fiscalCode}}</td>
+            <td>
+                <a class="btn btn-primary" href="/examination/new?patientId={{id}}" role="button">Add examination <i class="fa fa-medkit"></i></a>
+            </td>
+        </tr>
     {{/patients}}
     </tbody>
 </table>
