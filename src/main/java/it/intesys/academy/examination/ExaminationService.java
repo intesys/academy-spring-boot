@@ -6,8 +6,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExaminationService {
 
+    private final ExaminationDao examinationDao;
+
+    public ExaminationService(ExaminationDao examinationDao) {
+
+        this.examinationDao = examinationDao;
+    }
+
     public void save(Examination examination) {
 
-        // TODO use examinationDao to save examination
+        examinationDao.save(examination);
     }
 }
