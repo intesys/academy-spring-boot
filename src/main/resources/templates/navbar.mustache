@@ -14,5 +14,14 @@
                 <a class="nav-link" href="#">Examinations</a>
             </li>
         </ul>
+
+        {{#currentUsername}}
+            <span>You are logged in as "{{currentUsername}}"</span>
+            <a class="ml-2" href="/logout">Logout</a>
+        {{/currentUsername}}
+        {{^currentUsername}}
+            <span>You are not logged in</span>
+            <a class="ml-2" href="/login">Login</a>
+        {{/currentUsername}}
     </div>
 </nav>

@@ -31,9 +31,11 @@
             <td>{{firstName}} {{lastName}}</td>
             <td>{{birthDate}}</td>
             <td>{{fiscalCode}}</td>
-            <td class="float-right">
-                <a class="btn btn-primary" href="/examination/new?patientId={{id}}" role="button">Add examination <i class="fa fa-medkit"></i></a>
-                <a class="btn btn-secondary" href="/examinations/{{id}}" role="button">View examinations <i class="fa fa-stethoscope"></i></a>
+            <td>
+                {{#isAdmin}}
+                    <a class="btn btn-primary" href="/examination/new?patientId={{id}}" role="button">Add examination <i class="fa fa-medkit"></i></a>
+                    <a class="btn btn-secondary" href="/examinations/{{id}}" role="button">View examinations <i class="fa fa-stethoscope"></i></a>
+                {{/isAdmin}}
             </td>
         </tr>
     {{/patients}}
