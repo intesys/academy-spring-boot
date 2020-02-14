@@ -15,7 +15,7 @@ git checkout tags/IASB#2-START
 ```
 
 Ad ogni task corrisponde un commit che inizia con **IASB#2**. Per vedere la lista dei commit e quindi le modifiche da fare, cliccare qui:
-https://github.com/ecostanzi/intesys-academy-spring-boot/commits/master
+https://gitlab.intesys.it/intesys-academy/corso-spring-boot
 
 ### Banner 
 Aggiungere un banner custom generato tramite sito: http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
@@ -36,7 +36,7 @@ Abilitare la componente ServerProperties tramite @EnableConfigurationProperties
 1. Creare 2 file di properties/profili uno di sviluppo e uno di produzione in cui si differenziano le properties del datasource con h2 per dev;
 2. Verificare le differenze facendo partire l'applicativo con i valori: prod e dev 
         
-        -Dsping.profiles.active
+        -Dspring.profiles.active
 
 ### Profilo di default
 Creare una configurazione che abiliti di default il profilo di dev;
