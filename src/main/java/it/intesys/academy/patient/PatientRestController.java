@@ -1,11 +1,9 @@
 package it.intesys.academy.patient;
 
+import it.intesys.academy.util.Counter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +23,16 @@ public class PatientRestController {
     public List<Patient> searchPatient(@RequestParam("search") String search ) {
         logger.info("Searching for {}", search);
         return patientService.searchPatient(search);
+    }
+
+    @GetMapping("/patients/{patientId}")
+    public Patient getPatient(@PathVariable("patientId") Long patientId) {
+        logger.info("Retrieving patient with id {}", patientId);
+        return patientService.getPatient(patientId);
+    }
+
+    @GetMapping("/patients/count")
+    public Counter countPatients() {
+        return new Counter(patientService.countPatients());
     }
 }
