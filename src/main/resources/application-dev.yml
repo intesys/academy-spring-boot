@@ -13,3 +13,4 @@ spring:
       enabled: true
 application:
   custom-property: Custom property DEV
+  api-endpoint: http://localhost:8081/api
