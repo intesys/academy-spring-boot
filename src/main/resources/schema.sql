@@ -1,4 +1,4 @@
-create table patient
+create table if not exists patient
 (
     id int auto_increment
         primary key,
@@ -8,7 +8,7 @@ create table patient
     fiscalCode char(16) not null
 );
 
-create table examination
+create table if not exists examination
 (
     id int auto_increment primary key,
     patientId int not null references patient,

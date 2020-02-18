@@ -1,33 +1,11 @@
 package it.intesys.academy.patient;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 
-@Component
-public class PatientDao {
+public interface PatientDao {
+    Patient findById(Long patientId);
 
-    private JdbcTemplate jdbcTemplate;
+    List<Patient> searchPatient(String searchString);
 
-    public PatientDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public Patient findById(Long patientId) {
-        return jdbcTemplate.queryForObject("select id, firstName, lastName, birthDate, fiscalCode from patient where id = ?",
-                new Object[]{ patientId }, new BeanPropertyRowMapper<>(Patient.class));
-    }
-
-    public List<Patient> searchPatient(String searchString) {
-        String search = "%" + searchString + "%";
-        return jdbcTemplate.query("select id, firstName, lastName, birthDate, fiscalCode from patient where lastName like ? or firstName like ?",
-                new Object[]{searchString, search}, new BeanPropertyRowMapper<>(Patient.class));
-    }
-
-    public int countPatients() {
-        return jdbcTemplate.queryForObject("select count(*) from patient", Integer.class);
-    }
-
+    int countPatients();
 }
