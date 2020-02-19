@@ -1,5 +1,7 @@
 package it.intesys.academy.examination;
 
+import it.intesys.academy.api.client.api.ExaminationsApi;
+import it.intesys.academy.api.client.model.ExaminationClientDTO;
 import it.intesys.academy.examination.model.Examination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +12,10 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @Primary
@@ -20,23 +24,48 @@ public class ExaminationRestDao implements ExaminationDao {
 
     private static Logger logger = LoggerFactory.getLogger(ExaminationRestDao.class);
 
-    private final RestTemplate restTemplate;
+    private final ExaminationsApi examinationsApi;
 
-    public ExaminationRestDao(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public ExaminationRestDao(ExaminationsApi examinationsApi) {
+        this.examinationsApi = examinationsApi;
     }
 
     @Override
     public List<Examination> findByPatientId(long patientId) {
         logger.info("Fetching patient {} examinations via REST APIs", patientId);
-        Examination[] examinations = restTemplate.getForObject("/patients/{patientId}/examinations", Examination[].class, patientId);
-        return Arrays.asList(examinations);
+        List<ExaminationClientDTO> examinations = examinationsApi.getPatientExaminations(patientId);
+        return examinations.stream()
+                .map(examinationClientDTO -> toExamination(examinationClientDTO))
+                .collect(Collectors.toList());
     }
 
     @Override
     public void save(Examination examination) {
         logger.info("Saving examination for patient {} via REST APIs", examination.getPatientId());
         examination.setExaminationDate(OffsetDateTime.now());
-        restTemplate.postForEntity("/examinations", examination, Void.class);
+        ExaminationClientDTO examinationClientDTO = toExaminationClientDTO(examination);
+        examinationsApi.saveExamination(examinationClientDTO);
+    }
+
+    private Examination toExamination(ExaminationClientDTO examinationApiDTO) {
+        var examination = new Examination();
+        examination.setDiastolicPressure(examinationApiDTO.getDiastolicPressure());
+        examination.setExaminationDate(OffsetDateTime.ofInstant(examinationApiDTO.getExaminationDate(), ZoneId.systemDefault()));
+        examination.setHeight(examinationApiDTO.getHeight());
+        examination.setPatientId(Math.toIntExact(examinationApiDTO.getPatientId()));
+        examination.setSystolicPressure(examinationApiDTO.getSystolicPressure());
+        examination.setWeight(examinationApiDTO.getWeight());
+        return examination;
+    }
+
+    private ExaminationClientDTO toExaminationClientDTO(Examination examination) {
+        var examinationDTO = new ExaminationClientDTO();
+        examinationDTO.setDiastolicPressure(examination.getDiastolicPressure());
+        examinationDTO.setExaminationDate(examination.getExaminationDate().toInstant());
+        examinationDTO.setHeight(examination.getHeight());
+        examinationDTO.setPatientId((long) examination.getPatientId());
+        examinationDTO.setSystolicPressure(examination.getSystolicPressure());
+        examinationDTO.setWeight(examination.getWeight());
+        return examinationDTO;
     }
 }

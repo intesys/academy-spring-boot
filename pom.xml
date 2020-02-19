@@ -75,6 +75,12 @@
             <version>0.2.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
         <!-- testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -125,6 +131,35 @@
                                 <importMapping>java.time.OffsetDateTime=java.time.Instant</importMapping>
                             </importMappings>
 
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>openapi-client</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api.yml</inputSpec>
+                            <generatorName>java</generatorName>
+                            <library>resttemplate</library>
+                            <apiPackage>it.intesys.academy.api.client.api</apiPackage>
+                            <modelPackage>it.intesys.academy.api.client.model</modelPackage>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <modelNameSuffix>ClientDTO</modelNameSuffix>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <supportingFilesToGenerate>ApiClient.java,Authentication.java,HttpBasicAuth.java,HttpBearerAuth.java,ApiKeyAuth.java,RFC3339DateFormat.java</supportingFilesToGenerate>
+                            <configOptions>
+                                <title>wardapp-client</title>
+                                <sourceFolder>src/gen/java/main</sourceFolder>
+                                <dateLibrary>java8</dateLibrary>
+                            </configOptions>
+                            <typeMappings>
+                                <typeMapping>OffsetDateTime=Instant</typeMapping>
+                            </typeMappings>
+                            <importMappings>
+                                <importMapping>java.time.OffsetDateTime=java.time.Instant</importMapping>
+                            </importMappings>
                         </configuration>
                     </execution>
                 </executions>
