@@ -63,6 +63,18 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+
         <!-- testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -81,6 +93,41 @@
                 <configuration>
                     <release>11</release>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>4.2.3</version>
+                <executions>
+                    <execution>
+                        <id>server</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api.yml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>it.intesys.academy.web.api</apiPackage>
+                            <modelPackage>it.intesys.academy.web.api.model</modelPackage>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <modelNameSuffix>ApiDTO</modelNameSuffix>
+                            <configOptions>
+                                <delegatePattern>true</delegatePattern>
+                                <useTags>true</useTags>
+                                <title>wardapp</title>
+                                <serializableModel>true</serializableModel>
+                            </configOptions>
+                            <!-- tells swagger codegen to use instant instead of OffsetDateTime -->
+                            <typeMappings>
+                                <typeMapping>OffsetDateTime=Instant</typeMapping>
+                            </typeMappings>
+                            <importMappings>
+                                <importMapping>java.time.OffsetDateTime=java.time.Instant</importMapping>
+                            </importMappings>
+
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

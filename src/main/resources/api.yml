@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  title: Intesys Ward App
+  version: 1.0.0
+  description: API Intesys Ward App
+tags:
+  - name: Patient
+    description: Api For Patients
+  - name: Examinations
+    description: Api For Examinations
+
+servers:
+  - url: 'http://localhost:8080/api'
+
+paths:
+  '/patients/{patientId}':
+    get:
+      tags:
+        - Patient
+      summary: Retrieve Patient Details
+      operationId: getPatient
+      parameters:
+        - in: path
+          name: patientId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Patient Details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+  '/patients/search':
+    get:
+      tags:
+        - Patient
+      summary: Searches a Patient by first name or last name
+      operationId: searchPatient
+      parameters:
+        - in: query
+          name: search
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Patient Details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patient'
+  '/patients/count':
+    get:
+      tags:
+        - Patient
+      summary: Returns the number of patients
+      operationId: countPatients
+      responses:
+        '200':
+          description: Patient Details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Counter'
+
+  '/patients/{patientId}/examinations':
+    get:
+      tags:
+        - Examinations
+      summary: Retrieve all the examinations for a patient
+      operationId: getPatientExaminations
+      parameters:
+        - in: path
+          name: patientId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: The list of patient examinations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Examination'
+  '/examinations':
+    post:
+      tags:
+        - Examinations
+      summary: Save a new examination
+      operationId: saveExamination
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Examination'
+      responses:
+        '200':
+          description: The list of patient examinations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Examination'
+
+
+components:
+  schemas:
+    Counter:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+    Patient:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        fiscalCode:
+          type: string
+        birthDate:
+          type: string
+          format: date
+    Examination:
+      type: object
+      properties:
+        patientId:
+          type: integer
+          format: int64
+        examinationDate:
+          type: string
+          format: date-time
+        diastolicPressure:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+        systolicPressure:
+          type: integer
+          format: int32
+        weight:
+          type: integer
+          format: int32
