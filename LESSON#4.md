@@ -1,4 +1,4 @@
-# Lezione 3 - Spring Boot & REST API
+# Lezione 4 - Spring Boot & REST API
 
 ## Setup
 
@@ -32,7 +32,7 @@ public Counter countPatients() {
 
 Creare il nuovo controller `ExaminationRestController.java` e creare 2 endpoint rest:
 - `@GetMapping("/patients/{patientId}/examinations")` per la lista degli esami del paziente 
-- `@PostMapping("/examinations")` per creare un nuovo esame
+- `@PostMapping("/examinations")` per creare un nuovo esame. (hint: usare `@RequestBody` invece di `@ModelAttribute`)
 
 ---
 
