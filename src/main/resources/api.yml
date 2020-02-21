@@ -136,6 +136,9 @@ components:
     Examination:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         patientId:
           type: integer
           format: int64
