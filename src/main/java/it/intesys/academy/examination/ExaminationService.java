@@ -3,6 +3,7 @@ package it.intesys.academy.examination;
 import it.intesys.academy.examination.model.Examination;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -20,8 +21,8 @@ class ExaminationService {
         return examinationDao.findByPatientId(patientId);
     }
 
-    public void save(Examination examination) {
-
-        examinationDao.save(examination);
+    public Examination save(Examination examination) {
+        examination.setExaminationDate(OffsetDateTime.now());
+        return examinationDao.save(examination);
     }
 }

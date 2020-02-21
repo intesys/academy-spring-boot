@@ -4,12 +4,22 @@ import java.time.OffsetDateTime;
 
 public class Examination {
 
+    private Long id;
     private int diastolicPressure;
     private OffsetDateTime examinationDate;
     private int height;
     private int patientId;
     private int systolicPressure;
     private int weight;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public int getDiastolicPressure() {
 

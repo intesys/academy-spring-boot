@@ -8,5 +8,5 @@ public interface ExaminationDao {
 
     List<Examination> findByPatientId(long patientId);
 
-    void save(Examination examination);
+    Examination save(Examination examination);
 }

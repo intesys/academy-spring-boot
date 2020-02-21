@@ -40,11 +40,12 @@ public class ExaminationRestDao implements ExaminationDao {
     }
 
     @Override
-    public void save(Examination examination) {
+    public Examination save(Examination examination) {
         logger.info("Saving examination for patient {} via REST APIs", examination.getPatientId());
         examination.setExaminationDate(OffsetDateTime.now());
         ExaminationClientDTO examinationClientDTO = toExaminationClientDTO(examination);
-        examinationsApi.saveExamination(examinationClientDTO);
+        ExaminationClientDTO newExamination = examinationsApi.saveExamination(examinationClientDTO);
+        return toExamination(newExamination);
     }
 
     private Examination toExamination(ExaminationClientDTO examinationApiDTO) {
