@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active: dev
+    include:
+      - fake-data
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:iasb;DB_CLOSE_DELAY=-1;IGNORECASE=true;
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  flyway:
+    locations: classpath:/db/migration,classpath:/db/fake-data
+application:
+  custom-property: Custom property DEV
+  api-endpoint: http://localhost:8081/api
