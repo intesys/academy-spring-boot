@@ -26,7 +26,7 @@ class ExaminationJdbcDao implements ExaminationDao {
 
         logger.info("Fetching patient {} examinations via JpaRepository", patientId);
 
-        return examinationRepository.findByPatientId(Math.toIntExact(patientId));
+        return examinationRepository.findByPatientIdOrderByExaminationDate(Math.toIntExact(patientId));
     }
 
     @Override

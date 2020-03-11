@@ -35,6 +35,6 @@ class PatientJdcbDao implements PatientDao {
     public List<Patient> searchPatient(String searchString) {
 
         logger.info("Searching patient {} via JpaRepository", searchString);
-        return patientRepository.searchPatient("%" + searchString + "%");
+        return patientRepository.findByLastNameContainingOrFirstNameContaining(searchString, searchString);
     }
 }
