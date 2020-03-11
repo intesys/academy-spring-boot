@@ -1,59 +1,45 @@
 package it.intesys.academy.examination;
 
-import it.intesys.academy.examination.model.Examination;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
-
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.time.OffsetDateTime;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import it.intesys.academy.examination.model.Examination;
 
 @Repository
 class ExaminationJdbcDao implements ExaminationDao {
 
     private static Logger logger = LoggerFactory.getLogger(ExaminationJdbcDao.class);
-    private final JdbcTemplate jdbcTemplate;
+    private final EntityManager entityManager;
 
-    public ExaminationJdbcDao(JdbcTemplate jdbcTemplate) {
+    public ExaminationJdbcDao(EntityManager entityManager) {
 
-        this.jdbcTemplate = jdbcTemplate;
+        this.entityManager = entityManager;
     }
 
     @Override
     public List<Examination> findByPatientId(long patientId) {
-        logger.info("Fetching patient {} examinations via JDBC template", patientId);
-        return jdbcTemplate
-            .query("SELECT * FROM examination WHERE patientId = ? ORDER BY examinationDate", new BeanPropertyRowMapper<>(Examination.class), patientId);
+        logger.info("Fetching patient {} examinations via entityManager", patientId);
+        TypedQuery<Examination> query =
+            entityManager.createQuery("select e from Examination e where e.patientId = :patientId order by e.examinationDate", Examination.class);
+        query.setParameter("patientId", Math.toIntExact(patientId));
+        return query.getResultList();
     }
 
     @Override
+    @Transactional
     public Examination save(Examination examination) {
-        logger.info("Saving examination for patient {} via JDBC Template", examination.getPatientId());
-        String inserExaminationSQL =
-                "INSERT INTO examination(patientId, diastolicPressure, systolicPressure, height, weight, examinationDate) VALUES (?, ?, ?, ?, ?, ?)";
-
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(inserExaminationSQL, new String[]{"id"});
-            ps.setLong(1, examination.getPatientId());
-            ps.setInt(2, examination.getDiastolicPressure());
-            ps.setInt(3, examination.getSystolicPressure());
-            ps.setInt(4, examination.getHeight());
-            ps.setInt(5, examination.getWeight());
-            ps.setDate(6, new Date(Date.from(examination.getExaminationDate().toInstant()).getTime()));
-            return ps;
-        }, keyHolder);
-
-        examination.setId(keyHolder.getKey().longValue());
-
+        logger.info("Saving examination for patient {} via entityManager", examination.getPatientId());
+        examination.setExaminationDate(OffsetDateTime.now());
+        entityManager.persist(examination);
         return examination;
-
     }
 }
 
