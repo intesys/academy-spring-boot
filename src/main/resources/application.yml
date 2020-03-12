@@ -5,3 +5,5 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: true
+  jpa:
+    show-sql: true
