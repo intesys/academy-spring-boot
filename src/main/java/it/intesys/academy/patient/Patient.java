@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class Patient {
     private Long id;
     @Column(name = "LASTNAME")
     private String lastName;
-    @OneToMany(mappedBy = "patientId")
+    @OneToMany(mappedBy = "patientId", fetch = FetchType.EAGER)
     private List<Examination> examinations = new LinkedList<>();
 
     public Patient(Long id, String firstName, String lastName, LocalDate birthDate, String fiscalCode) {
