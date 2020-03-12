@@ -1,7 +1,5 @@
 package it.intesys.academy.examination;
 
-import it.intesys.academy.examination.model.Examination;
-import it.intesys.academy.patient.PatientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import it.intesys.academy.examination.model.Examination;
+import it.intesys.academy.patient.PatientService;
 
 @Controller
 public class ExaminationController {
@@ -32,8 +33,9 @@ public class ExaminationController {
     @GetMapping("/examinations/{patientId}")
     public String patientExaminations(@PathVariable long patientId, Model model) {
 
-        model.addAttribute("patient", patientService.getPatient(patientId));
-        model.addAttribute("examinations", examinationService.findByPatientId(patientId));
+        var patient = patientService.getPatient(patientId);
+        model.addAttribute("patient", patient);
+        model.addAttribute("examinations", patient.getExaminations());
 
         return "patient-examinations";
     }
