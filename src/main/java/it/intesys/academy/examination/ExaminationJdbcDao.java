@@ -3,9 +3,6 @@ package it.intesys.academy.examination;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -17,30 +14,28 @@ import it.intesys.academy.examination.model.Examination;
 class ExaminationJdbcDao implements ExaminationDao {
 
     private static Logger logger = LoggerFactory.getLogger(ExaminationJdbcDao.class);
-    private final EntityManager entityManager;
+    private ExaminationRepository examinationRepository;
 
-    public ExaminationJdbcDao(EntityManager entityManager) {
+    public ExaminationJdbcDao(ExaminationRepository examinationRepository) {
 
-        this.entityManager = entityManager;
+        this.examinationRepository = examinationRepository;
     }
 
     @Override
     public List<Examination> findByPatientId(long patientId) {
-        logger.info("Fetching patient {} examinations via entityManager", patientId);
-        TypedQuery<Examination> query =
-            entityManager.createQuery("select e from Examination e where e.patientId = :patientId order by e.examinationDate", Examination.class);
-        query.setParameter("patientId", Math.toIntExact(patientId));
-        return query.getResultList();
+
+        logger.info("Fetching patient {} examinations via JpaRepository", patientId);
+
+        return examinationRepository.findByPatientId(Math.toIntExact(patientId));
     }
 
     @Override
     @Transactional
     public Examination save(Examination examination) {
-        logger.info("Saving examination for patient {} via entityManager", examination.getPatientId());
+
+        logger.info("Saving examination for patient {} via JpaRepository", examination.getPatientId());
         examination.setExaminationDate(OffsetDateTime.now());
-        entityManager.persist(examination);
-        return examination;
+
+        return examinationRepository.save(examination);
     }
 }
-
-
