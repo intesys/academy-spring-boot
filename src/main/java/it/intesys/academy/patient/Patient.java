@@ -1,6 +1,7 @@
 package it.intesys.academy.patient;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +20,10 @@ public class Patient {
 
     @Column(name = "BIRTHDATE")
     private LocalDate birthDate;
+    @Column(name = "CREATEDATE")
+    private OffsetDateTime createDate;
+    @OneToMany(mappedBy = "patientId", fetch = FetchType.EAGER)
+    private List<Examination> examinations = new LinkedList<>();
     @Column(name = "FIRSTNAME")
     private String firstName;
     @Column(name = "FISCALCODE")
@@ -26,10 +31,10 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "LASTMODIFICATIONDATE")
+    private OffsetDateTime lastModificationDate;
     @Column(name = "LASTNAME")
     private String lastName;
-    @OneToMany(mappedBy = "patientId", fetch = FetchType.EAGER)
-    private List<Examination> examinations = new LinkedList<>();
 
     public Patient(Long id, String firstName, String lastName, LocalDate birthDate, String fiscalCode) {
 
@@ -47,6 +52,11 @@ public class Patient {
     public LocalDate getBirthDate() {
 
         return birthDate;
+    }
+
+    public OffsetDateTime getCreateDate() {
+
+        return createDate;
     }
 
     public List<Examination> getExaminations() {
@@ -69,6 +79,11 @@ public class Patient {
         return id;
     }
 
+    public OffsetDateTime getLastModificationDate() {
+
+        return lastModificationDate;
+    }
+
     public String getLastName() {
 
         return lastName;
@@ -77,6 +92,11 @@ public class Patient {
     public void setBirthDate(LocalDate birthDate) {
 
         this.birthDate = birthDate;
+    }
+
+    public void setCreateDate(OffsetDateTime createDate) {
+
+        this.createDate = createDate;
     }
 
     public void setExaminations(List<Examination> examinations) {
@@ -99,6 +119,11 @@ public class Patient {
         this.id = id;
     }
 
+    public void setLastModificationDate(OffsetDateTime lastModificationDate) {
+
+        this.lastModificationDate = lastModificationDate;
+    }
+
     public void setLastName(String lastName) {
 
         this.lastName = lastName;
@@ -107,8 +132,8 @@ public class Patient {
     @Override
     public String toString() {
 
-        return "Patient{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", birthDate=" + birthDate + ", fiscalCode='" +
-               fiscalCode + '\'' + '}';
+        return "Patient{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", birthDate=" + birthDate + ", fiscalCode='"
+                        + fiscalCode + '\'' + '}';
     }
 
 }
