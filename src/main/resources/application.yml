@@ -7,3 +7,6 @@ spring:
       write-dates-as-timestamps: true
   jpa:
     show-sql: true
+logging:
+  level:
+    it.intesys.academy.aop: debug
