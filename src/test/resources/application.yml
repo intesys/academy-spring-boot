@@ -1,0 +1,12 @@
+logging:
+  level:
+    it.intesys.academy.aop: debug
+
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+
+application:
+  custom-property: Custom property DEV
+  api-endpoint: http://localhost:8080/api

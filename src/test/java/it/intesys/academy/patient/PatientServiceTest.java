@@ -1,35 +1,32 @@
 package it.intesys.academy.patient;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.*;
 
 public class PatientServiceTest {
 
-    @Test
-    public void shouldReturnPatient() {
-        PatientDao patientDaoMock = Mockito.mock(PatientDao.class);
-        when(patientDaoMock.findById(anyLong()))
-                .thenReturn(new Patient(1L, "Mario", "Rossi", LocalDate.now().minusYears(30), "RSSMRA94R10L781Z"));
+    private PatientDao patientDao;
 
-        PatientService patientService = new PatientService(patientDaoMock);
-        Patient patient = patientService.getPatient(1L);
-        Assert.assertNotNull(patient);
+    private PatientService patientService;
+
+    @Test
+    @DisplayName("Returns a patient by id")
+    public void shouldReturnPatient() {
+        fail("Not Implemented");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
+    @DisplayName("Throws exception beacause patient not found")
     public void shouldThrowException() {
-        PatientDao patientDaoMock = Mockito.mock(PatientDao.class);
-        when(patientDaoMock.findById(anyLong()))
-                .thenReturn(null);
+        fail("Not Implemented");
+    }
 
-        PatientService patientService = new PatientService(patientDaoMock);
-        patientService.getPatient(2L);
+    private Patient newPatient(Long id, String firstName, String lastName) {
+        return new Patient(id, firstName, lastName, LocalDate.now().minusYears(39), "01234567890123456");
     }
 
 }
