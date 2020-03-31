@@ -1,11 +1,13 @@
 package it.intesys.academy.patient;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class PatientServiceTest {
 
@@ -16,13 +18,25 @@ public class PatientServiceTest {
     @Test
     @DisplayName("Returns a patient by id")
     public void shouldReturnPatient() {
-        fail("Not Implemented");
+        patientDao = mock(PatientDao.class);
+        when(patientDao.findById(1L))
+                .thenReturn(newPatient(1L, "Mario", "Rossi"));
+
+        PatientService patientService = new PatientService(patientDao);
+        Patient patient = patientService.getPatient(1L);
+        assertThat(patient).extracting("firstName").isEqualTo("Mario");
+        assertThat(patient).extracting("lastName").isEqualTo("Rossi");
     }
 
     @Test
     @DisplayName("Throws exception beacause patient not found")
     public void shouldThrowException() {
-        fail("Not Implemented");
+        patientDao = mock(PatientDao.class);
+        when(patientDao.findById(1L))
+                .thenReturn(null);
+
+        PatientService patientService = new PatientService(patientDao);
+        Assertions.assertThrows(RuntimeException.class, ()-> patientService.getPatient(1L));
     }
 
     private Patient newPatient(Long id, String firstName, String lastName) {
