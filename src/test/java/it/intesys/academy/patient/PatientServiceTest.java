@@ -1,28 +1,37 @@
 package it.intesys.academy.patient;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class PatientServiceTest {
 
+    @Mock
     private PatientDao patientDao;
 
     private PatientService patientService;
 
+    @BeforeEach
+    void setUp() {
+        patientService = new PatientService(patientDao);
+    }
+
     @Test
     @DisplayName("Returns a patient by id")
     public void shouldReturnPatient() {
-        patientDao = mock(PatientDao.class);
         when(patientDao.findById(1L))
                 .thenReturn(newPatient(1L, "Mario", "Rossi"));
 
-        PatientService patientService = new PatientService(patientDao);
         Patient patient = patientService.getPatient(1L);
         assertThat(patient).extracting("firstName").isEqualTo("Mario");
         assertThat(patient).extracting("lastName").isEqualTo("Rossi");
@@ -31,11 +40,9 @@ public class PatientServiceTest {
     @Test
     @DisplayName("Throws exception beacause patient not found")
     public void shouldThrowException() {
-        patientDao = mock(PatientDao.class);
         when(patientDao.findById(1L))
                 .thenReturn(null);
 
-        PatientService patientService = new PatientService(patientDao);
         Assertions.assertThrows(RuntimeException.class, ()-> patientService.getPatient(1L));
     }
 
