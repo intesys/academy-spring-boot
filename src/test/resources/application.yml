@@ -3,6 +3,8 @@ logging:
     it.intesys.academy.aop: debug
 
 spring:
+  profiles:
+    include: mysql
   jackson:
     serialization:
       write-dates-as-timestamps: true

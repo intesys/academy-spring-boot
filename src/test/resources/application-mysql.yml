@@ -1,9 +1,7 @@
 spring:
-  profiles:
-    active: prod
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/academydb
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:8.0.19://hostname/academydb
     username: intesys
     password: academy
   jpa:
