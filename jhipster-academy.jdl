@@ -1,0 +1,30 @@
+entity Patient {
+	firstName String required maxlength(25)
+    lastName String required maxlength(100)
+    fiscalCode String required minlength(16) maxlength(16)
+    birthDate LocalDate required
+    lastModifiedDate OffsetDateTime
+    createdDate OffsetDateTime
+}
+
+entity Examination {
+	weight Integer required
+    height Integer required
+    diastolicPressure Integer required
+    systolicPressure Integer required
+    examinationDate OffsetDateTime
+    lastModifiedDate OffsetDateTime
+    createdDate OffsetDateTime
+}
+
+relationship OneToMany {
+	Patient{examinations} to Examination{patient(lastName) required}
+}
+
+relationship ManyToOne {
+	Examination{user(userName)} to User //User is a default Jhipster entity
+}
+
+service Patient, Examination with ServiceClass
+dto * with DTO
+paginate * with Pagination
