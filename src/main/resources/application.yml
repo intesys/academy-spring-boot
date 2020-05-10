@@ -4,7 +4,7 @@ server:
 spring:
   jackson:
     serialization:
-      write-dates-as-timestamps: true
+      write-dates-as-timestamps: false
   jpa:
     show-sql: true
 logging:

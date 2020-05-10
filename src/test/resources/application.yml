@@ -7,7 +7,7 @@ spring:
     include: mysql
   jackson:
     serialization:
-      write-dates-as-timestamps: true
+      write-dates-as-timestamps: false
 
 application:
   custom-property: Custom property DEV
