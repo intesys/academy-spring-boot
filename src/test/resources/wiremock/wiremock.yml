@@ -1,0 +1,8 @@
+version: '2'
+services:
+  wiremock:
+    image: rodolpheche/wiremock
+    volumes:
+      - $PWD/stubs:/home/wiremock
+    ports:
+      - 8088:8080
