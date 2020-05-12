@@ -4,7 +4,7 @@ logging:
 
 spring:
   profiles:
-    include: mysql
+#    include: mysql
   jackson:
     serialization:
       write-dates-as-timestamps: false
