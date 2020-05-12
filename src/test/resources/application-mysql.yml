@@ -5,5 +5,5 @@ spring:
     username: intesys
     password: academy
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     database: MYSQL
