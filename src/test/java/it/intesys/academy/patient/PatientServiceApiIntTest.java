@@ -67,10 +67,10 @@ public class PatientServiceApiIntTest {
     void testPatientSearchWithResults() throws JsonProcessingException {
         //given
         var patientList = List.of(newPatient("Giuseppe", "Verdi"));
-        String patientListResponse = objectMapper.writeValueAsString(patientList);
+        String jsonList = objectMapper.writeValueAsString(patientList);
         mockServer.expect(ExpectedCount.once(),
                 requestTo("http://localhost:8088/api/patients/search?search=Verdi"))
-                .andRespond(withSuccess(patientListResponse, MediaType.APPLICATION_JSON));
+                .andRespond(withSuccess(jsonList, MediaType.APPLICATION_JSON));
 
         //test
         List<Patient> patients = patientService.searchPatient("Verdi");
