@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -13,22 +14,22 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 public class PatientServiceTest {
 
-    @Mock
     private PatientDao patientDao;
 
     private PatientService patientService;
 
     @BeforeEach
     void setUp() {
+        patientDao = Mockito.mock(PatientDao.class);
         patientService = new PatientService(patientDao);
     }
 
     @Test
     @DisplayName("Returns a patient by id")
     public void shouldReturnPatient() {
+
         //given
         when(patientDao.findById(1L))
                 .thenReturn(newPatient(1L, "Mario", "Rossi"));
