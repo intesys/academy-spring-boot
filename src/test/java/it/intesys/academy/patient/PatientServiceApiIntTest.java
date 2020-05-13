@@ -51,7 +51,7 @@ public class PatientServiceApiIntTest {
     void testPatientSearchWithNoResults() {
         //given
         mockServer.expect(ExpectedCount.once(),
-                requestTo("http://localhost:8080/api/patients/search?search=Mari"))
+                requestTo("http://localhost:8088/api/patients/search?search=Mari"))
                 .andRespond(withSuccess("[]", MediaType.APPLICATION_JSON));
 
         //test
@@ -69,7 +69,7 @@ public class PatientServiceApiIntTest {
         var patientList = List.of(newPatient("Giuseppe", "Verdi"));
         String patientListResponse = objectMapper.writeValueAsString(patientList);
         mockServer.expect(ExpectedCount.once(),
-                requestTo("http://localhost:8080/api/patients/search?search=Verdi"))
+                requestTo("http://localhost:8088/api/patients/search?search=Verdi"))
                 .andRespond(withSuccess(patientListResponse, MediaType.APPLICATION_JSON));
 
         //test
