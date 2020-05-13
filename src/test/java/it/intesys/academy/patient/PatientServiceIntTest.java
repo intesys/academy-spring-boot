@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +22,7 @@ public class PatientServiceIntTest {
 
     @Test
     @DisplayName("Case sensitive search works with patient in the database")
+    @Transactional
     void testPatientSearch() {
         //given
         patientRepository.saveAll(List.of(
