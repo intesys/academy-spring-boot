@@ -21,7 +21,8 @@ class BMICalculatorTest {
     @Test
     @DisplayName("Throws exeption when negative BMI is passed")
     void testNegativeBMI() {
-        Assertions.assertThrows(IllegalArgumentException.class, ()->BMICalculator.getBMICondition(-1));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                ()->BMICalculator.getBMICondition(-1));
     }
 
     @DisplayName("Calculates multiple BMI conditions")

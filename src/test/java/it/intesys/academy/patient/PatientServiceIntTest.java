@@ -36,7 +36,8 @@ public class PatientServiceIntTest {
 
         //assert
         assertThat(patients).hasSize(2);
-        assertThat(patients).extracting("lastName").containsOnly("Rossi", "Bianchi");
+        assertThat(patients).extracting("lastName")
+                .containsOnly("Rossi", "Bianchi");
     }
 
     private Patient newPatient(String firstName, String lastName) {
