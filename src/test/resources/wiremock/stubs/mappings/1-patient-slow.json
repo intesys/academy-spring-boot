@@ -1,0 +1,20 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/patients/search?search=Slow"
+  },
+  "response": {
+    "status": 200,
+    "fixedDelayMilliseconds": 2000,
+    "jsonBody":  [
+        {
+          "id": 1,
+          "firstName": "Giuseppe",
+          "lastName": "Verdi"
+        }
+    ],
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

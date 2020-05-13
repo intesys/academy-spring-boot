@@ -11,4 +11,4 @@ spring:
 
 application:
   custom-property: Custom property DEV
-  api-endpoint: http://localhost:8080/api
+  api-endpoint: http://localhost:8088/api
