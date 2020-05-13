@@ -28,7 +28,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
  */
 @SpringBootTest
 @ActiveProfiles("rest")
-public class PatientServiceApiIntTest {
+public class PatientServiceApiIT {
 
     @Autowired
     PatientService patientService;

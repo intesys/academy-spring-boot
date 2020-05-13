@@ -12,7 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
-public class PatientServiceIntTest {
+public class PatientServiceIT {
 
     @Autowired
     PatientService patientService;

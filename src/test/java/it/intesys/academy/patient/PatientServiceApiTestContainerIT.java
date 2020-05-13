@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("rest")
 @Testcontainers
-public class PatientServiceApiTCIntTest {
+public class PatientServiceApiTestContainerIT {
 
     @Container
     public static GenericContainer restServer = new GenericContainer("rodolpheche/wiremock")
