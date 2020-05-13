@@ -29,10 +29,14 @@ public class PatientServiceTest {
     @Test
     @DisplayName("Returns a patient by id")
     public void shouldReturnPatient() {
+        //given
         when(patientDao.findById(1L))
                 .thenReturn(newPatient(1L, "Mario", "Rossi"));
 
+        //test
         Patient patient = patientService.getPatient(1L);
+
+        //assert
         assertThat(patient).extracting("firstName").isEqualTo("Mario");
         assertThat(patient).extracting("lastName").isEqualTo("Rossi");
     }
@@ -40,9 +44,11 @@ public class PatientServiceTest {
     @Test
     @DisplayName("Throws exception beacause patient not found")
     public void shouldThrowException() {
+        //given
         when(patientDao.findById(1L))
                 .thenReturn(null);
 
+        // test & assert
         Assertions.assertThrows(RuntimeException.class, ()-> patientService.getPatient(1L));
     }
 
